@@ -2,11 +2,13 @@ from varname import argname
 from typing import Type, Union, Any, get_origin, get_args
 from types import UnionType
 from typing import Any, Type, Union
-from types import UnionType
-from typing import Union
 
 
 class LogWarning(Exception):
+    """
+    Class to log warning messages.
+    """
+
     def __init__(self, __message: str) -> None:
         val_instance(__message, str)
 
@@ -23,11 +25,11 @@ def val_instance(__o: Any, _type: Type | type | UnionType | tuple) -> None:
     Validates instance.
 
     Args:
-        __o (Any): __oect to be validated.
+        __o (Any): __object to be validated.
         _type (Type | type | UnionType | tuple): Valid types.
 
     Raises:
-        TypeError: If the __oect <__o> is not an instance of <_type>.
+        TypeError: If the __object <__o> is not an instance of <_type>.
     """
 
     _exp = None
@@ -65,11 +67,11 @@ def val_subclass(__o: Any, _type: Type | type | UnionType | tuple) -> None:
     Validates subclass.
 
     Args:
-        __o (Any): __oect to be validated.
+        __o (Any): __object to be validated.
         _type (Type | type | UnionType | tuple): Valid types.
 
     Raises:
-        TypeError: If the __oect <__o> is not a subclass of <_type>.
+        TypeError: If the __object <__o> is not a subclass of <_type>.
     """
 
     _exp = None
@@ -78,7 +80,7 @@ def val_subclass(__o: Any, _type: Type | type | UnionType | tuple) -> None:
         _type = get_args(_type)
         _exp = ', '.join([v.__name__ for v in _type])
     elif isinstance(_type, tuple):
-        # If it's a tuple, break every union type down into inidividual types.
+        # If it's a tuple, break every union type down into individual types.
         _types = []
 
         for _t in _type:
@@ -107,12 +109,12 @@ def defval_instance(__o: Any | None, _type: Type | type | UnionType | tuple, def
     Validates an instance of an __o against _type, if __o is None then the defval is set.
 
     Args:
-        __o (Any | None): __oect to be validated.
+        __o (Any | None): __object to be validated.
         _type (Type | type | UnionType | tuple): Valid types.
         defval (Any | None): Value to be set.
 
     Returns:
-        Any: Validated __oect, with default value set if necessary.
+        Any: Validated __object, with default value set if necessary.
     """
 
     if __o is None:
@@ -128,12 +130,12 @@ def defval_subclass(__o: Any | None, _type: Type | type | UnionType | tuple, def
     Validates that __o is a subclass of _type, if __o is None then the defval is set.
 
     Args:
-        __o (Any | None): __oect to be validated.
+        __o (Any | None): __object to be validated.
         _type (Type | type | UnionType | tuple): Valid subclasses.
         defval (Any | None): Value to be set.
 
     Returns:
-        Any: Validated __oect, with default value set if necessary.
+        Any: Validated __object, with default value set if necessary.
     """
 
     if __o is None:
