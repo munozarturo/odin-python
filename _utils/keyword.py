@@ -1,5 +1,9 @@
-__all__ = ["iskeyword", "issoftkeyword", "kwlist", "softkwlist"]
+"""
+Module used to define the `iskeyword` and `issofkeyword` functions;
+used to check if a string is a python keyword.
+"""
 
+# list of python keywords
 kwlist = [
     'False',
     'None',
@@ -38,11 +42,37 @@ kwlist = [
     'yield'
 ]
 
+# list of python soft keywords
 softkwlist = [
     '_',
     'case',
     'match'
 ]
 
-iskeyword = frozenset(kwlist).__contains__
-issoftkeyword = frozenset(softkwlist).__contains__
+
+def iskeyword(s: str) -> bool:
+    """
+    Check if a string is a python keyword.
+
+    Args:
+        s (str): String to be checked.
+
+    Returns:
+        bool: True if the string is a python keyword, False otherwise.
+    """
+
+    return s in kwlist
+
+
+def issofkeyword(s: str) -> bool:
+    """
+    Check if a string is a soft python keyword.
+
+    Args:
+        s (str): String to be checked.
+
+    Returns:
+        bool: True if the string is a python keyword, False otherwise.
+    """
+    
+    return s in softkwlist
