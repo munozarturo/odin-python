@@ -4,6 +4,9 @@ used to check if a string is a python keyword.
 """
 
 # list of python keywords
+from _utils.validation import val_instance
+
+
 kwlist = [
     'False',
     'None',
@@ -60,6 +63,9 @@ def iskeyword(s: str) -> bool:
     Returns:
         bool: True if the string is a python keyword, False otherwise.
     """
+    
+    # check if the input object is a string
+    val_instance(s, str)
 
     return s in kwlist
 
@@ -74,5 +80,8 @@ def issofkeyword(s: str) -> bool:
     Returns:
         bool: True if the string is a python keyword, False otherwise.
     """
+    
+    # check if input object is a string
+    val_instance(s, str)
     
     return s in softkwlist
