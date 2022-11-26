@@ -1,10 +1,10 @@
-from _utils.keyword import iskeyword as _iskeyword
 from types import UnionType
 from typing import Type
 
+from _utils.keyword import iskeyword as _iskeyword
 from _utils.typing import Version, NoneType, Iterable
 from _utils.validation import val_instance, LogWarning
-from strategy.protocol import StrategyResponse, StrategyEvent, Trade
+from strategy.protocol import StrategyResponse, Trade
 
 
 class CompatibilityError(Exception):
@@ -74,19 +74,19 @@ class Config:
     def __eq__(self, __o: object) -> bool:
         return hash(__o) == hash(self)
 
-    def as_dict():
+    def as_dict(self):
         pass
 
-    def as_list():
+    def as_list(self):
         pass
 
-    def as_tuple():
+    def as_tuple(self):
         pass
 
-    def to_json():
+    def to_json(self):
         pass
 
-    def to_csv():
+    def to_csv(self):
         pass
 
 
@@ -164,8 +164,9 @@ def config(version: Version, parameters: list | tuple[list | tuple]) -> Config:
         if name in seen:
             raise ValueError(f"Encountered duplicate field name: {name!r}")
         seen.add(name)
-        
+
         # got up to field defaults
+
 
 class Strategy:
     # @property `version` 'Version'
@@ -260,7 +261,8 @@ class Strategy:
     def config(self):
         raise ValueError(f"`config` can't be deleted, only overwritten.")
 
-    def __init__(self, config: object, version: Version | None = None, compatibility: Version | Iterable[Version] | None = None) -> None:
+    def __init__(self, config: object, version: Version | None = None,
+                 compatibility: Version | Iterable[Version] | None = None) -> None:
         """
         Stategy base class.
 

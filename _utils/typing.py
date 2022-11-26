@@ -1,6 +1,5 @@
 from pathlib import Path
 from typing import *
-from types import NoneType, UnionType
 
 # Universal
 RealNumber = Union[int, float]

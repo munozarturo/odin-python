@@ -1,4 +1,5 @@
 import datetime as dt
+from abc import ABC
 from math import isnan
 from types import NoneType
 from typing import SupportsInt
@@ -95,7 +96,7 @@ class StrategyResponse:
     @ticker.setter
     def ticker(self, _ticker: str | NoneType):
         val_instance(_ticker, (str, NoneType))
-        
+
         if not _ticker is None:
             self._ticker = _ticker.upper()
         else:
@@ -145,7 +146,9 @@ class StrategyResponse:
         del self._uid
         self._uid = None
 
-    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, command: str | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
+    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None,
+                 command: str | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None,
+                 uid: int | NoneType = None) -> None:
         self._time = None
         self._price = None
         self._command = None
@@ -162,11 +165,11 @@ class StrategyResponse:
 
     def __hash__(self) -> int:
         return self._uid
-    
+
     def __eq__(self, __o: object) -> bool:
         if not isinstance(__o, self.__class__):
             return False
-        
+
         return (self._time == __o._time and
                 self._price == __o._price and
                 self._command == __o._command and
@@ -184,7 +187,7 @@ class StrategyResponse:
 
         if not self._uid is None:
             _str += f"[{self._uid}]"
-            
+
         if not (self._ticker is None or self._exchange is None):
             _str += f": "
 
@@ -198,26 +201,29 @@ class StrategyResponse:
             _str += f" @ ${self._price}"
 
         return _str
-    
+
     def as_dict(self):
         raise NotImplementedError()
-    
+
     def to_json(self):
         raise NotImplementedError()
 
 
 class Hold(StrategyResponse):
-    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
+    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None,
+                 ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
         super().__init__(time, price, "HOLD", ticker, exchange, uid)
 
 
 class Buy(StrategyResponse):
-    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
+    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None,
+                 ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
         super().__init__(time, price, "BUY", ticker, exchange, uid)
 
 
 class Sell(StrategyResponse):
-    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
+    def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None,
+                 ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
         super().__init__(time, price, "SELL", ticker, exchange, uid)
 
 

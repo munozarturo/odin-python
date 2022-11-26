@@ -4,3 +4,7 @@ class Error(Exception):
 
 class ReadOnlyPropertyError(Error):
     pass
+
+
+class MustOverrideError(Error):
+    pass
