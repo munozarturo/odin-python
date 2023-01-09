@@ -1,3 +1,7 @@
+"""
+Module for type validation.
+"""
+
 from varname import argname
 from typing import Type, Union, Any, get_origin, get_args
 from types import UnionType
