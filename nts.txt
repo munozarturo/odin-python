@@ -1,0 +1,1 @@
+deps: ib_insync, varname, datetime, pandas

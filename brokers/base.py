@@ -1,6 +1,6 @@
 from _utils.errors import MustOverrideError
 from _utils.typing import Any, Callable
-from _utils.validation import val_instance
+from _utils.validate import val_instance
 from _utils.errors import Error
 
 class BrokerError(Error):

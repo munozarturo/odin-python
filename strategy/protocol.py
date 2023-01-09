@@ -4,7 +4,7 @@ from math import isnan
 from types import NoneType
 from typing import SupportsInt
 
-from _utils.validation import LogWarning, val_instance
+from _utils.validate import LogWarning, val_instance
 
 nan = float("nan")
 

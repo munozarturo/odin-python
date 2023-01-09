@@ -6,7 +6,7 @@ from typing import SupportsInt
 import json
 
 from _utils.typing import PathLike
-from _utils.validation import LogWarning, val_instance
+from _utils.validate import LogWarning, val_instance
 from _utils.time import parse_time
 
 nan = float("nan")

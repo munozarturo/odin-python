@@ -4,7 +4,7 @@ used to check if a string is a python keyword.
 """
 
 # list of python keywords
-from _utils.validation import val_instance
+from _utils.validate import val_instance
 
 
 kwlist = [

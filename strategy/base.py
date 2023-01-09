@@ -3,7 +3,7 @@ from typing import Type
 
 from _utils.keyword import iskeyword as _iskeyword
 from _utils.typing import Version, NoneType, Iterable
-from _utils.validation import val_instance, LogWarning
+from _utils.validate import val_instance, LogWarning
 from strategy.protocol import StrategyResponse, Trade
 
 
