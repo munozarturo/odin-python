@@ -13,6 +13,6 @@ class ReadOnlyPropertyError(Error):
     pass
 
 
-class MustOverrideError(Error):
+class RequiredOverwrite(Error):
     """Base class for errors coming from methods that must be overridden."""
     pass

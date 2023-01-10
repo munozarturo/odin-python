@@ -1,10 +1,5 @@
+from _utils.errors import RequiredOverwrite
 from strategy.protocol import StrategyResponse
-
-
-class RequiredOverwrite(Exception):
-    """ Base class for classes that require an overwrite. """
-    pass
-
 
 class Strategy:
     def __init__(self) -> None:
