@@ -6,10 +6,7 @@ from _utils.typing import Version, NoneType, Iterable
 from _utils.validate import val_instance, LogWarning
 from strategy.protocol import StrategyResponse, Trade
 
-
-class CompatibilityError(Exception):
-    """ Base class for compatibility errors. """
-    pass
+# todo: rewrite docs
 
 
 class RequiredOverwrite(Exception):
@@ -18,55 +15,9 @@ class RequiredOverwrite(Exception):
 
 
 class Config:
-    # @property `version` 'Version | NoneType'
-    # Used to define config `version`.
-    # `version` is used in compatibility checks.
-    # Can only be a single Version object which will be used in a compatibility check
-    # as in "Config.version in Strategy.compatibility".
-    # `version` is an optional parameter and if set to "None" compatibility
-    # will be implied with all strategies (likely to generate runtime errors).
-    @property
-    def version(self):
-        return self._version
-
-    def get_version(self) -> Version:
-        return self.version
-
-    @version.setter
-    def version(self, _version: Version | NoneType):
-        val_instance(_version, (Version, NoneType))
-
-        self._version = _version
-
-    def set_version(self, _version: Version) -> None:
-        self.version = _version
-
-    @version.deleter
-    def version(self):
-        del self._version
-        self._version = None
-
     def __init__(self, version: Version | None = None):
         self._version: Version = None
         self.version: Version = version
-
-    def __iscompatible__(self, __strategy: object) -> bool:
-        __compatibility: bool = False
-
-        if self.version is None:
-            LogWarning(
-                f"config `version` is None (implied compatibility with all strategies). runtime errors likely.")
-            __compatibility = True
-
-        if __strategy.compatibility == [None]:
-            LogWarning(
-                f"strategy `compatibility` is None (implied compatibility with all configs). runtime errors likely.")
-            __compatibility = True
-
-        if self._version in __strategy.compatibility:
-            __compatibility = True
-
-        return __compatibility
 
     def __hash__(self) -> int:
         return hash(tuple(self.as_list()))
@@ -169,68 +120,6 @@ def config(version: Version, parameters: list | tuple[list | tuple]) -> Config:
 
 
 class Strategy:
-    # @property `version` 'Version'
-    # Used to define strategy `version`.
-    # `version` used in strategy requests.
-    @property
-    def version(self):
-        return self._version
-
-    def get_version(self) -> Version:
-        return self.version
-
-    @version.setter
-    def version(self, _version: Version | NoneType):
-        val_instance(_version, (Version, NoneType))
-
-        self._version = _version
-
-    def set_version(self, _version: Version) -> None:
-        self.version = _version
-
-    @version.deleter
-    def version(self):
-        del self._version
-        self._version = None
-
-    # @property `compatibility` 'Version | Iterable[Version] | NoneType'
-    # Used to define strategy compatibility with config versions.
-    # Can be a single Version object used in a direct comparison ie.
-    # "Config.version == Strategy.compatibility" or can be an Iterable object
-    # of Version types, used as "Config.version in Strategy.compatibility".
-    # `compatibility` is an optional parameter which defaults to "None", if
-    # `compatibility` is "None" it is implied that the Strategy is compatible with
-    # all config versions which is likely to cause runtime errors (a warning will be
-    # raised).
-    @property
-    def compatibility(self):
-        return self._compatible
-
-    def get_compatibility(self) -> Version | Iterable[Version] | NoneType:
-        return self.compatibility
-
-    @compatibility.setter
-    def compatibility(self, _compatible: Version | Iterable[Version] | NoneType):
-        val_instance(_compatible, (Version, Iterable, NoneType))
-
-        if isinstance(_compatible, Version):
-            self._compatible = [_compatible]
-        elif isinstance(_compatible, Iterable):
-            if not all([isinstance(_c, Version) for _c in _compatible]):
-                raise ValueError(
-                    f"if `compatibility` is Iterable then all objects in `compatibility` must be of `Version` type.")
-            self._compatible = list(_compatible)
-        else:
-            self._compatible = [None]
-
-    def set_compatibility(self, _compatible: Version | Iterable[Version] | NoneType) -> None:
-        self.compatibility = _compatible
-
-    @compatibility.deleter
-    def compatibility(self):
-        del self._compatible
-        self._compatible = [None]
-
     # @property `config` 'Config'
     # Used to define the `config` class variable which is meant to be a 'Config' type
     # object which contais all required strategy parameters and are to be accesible by the
@@ -247,12 +136,8 @@ class Strategy:
     @config.setter
     def config(self, _config: object):
         val_instance(_config, object)
-
-        if self.__iscompatible__(_config):
-            self._config = _config
-        else:
-            raise CompatibilityError(
-                f"`config` version ({_config._version}) incompatible. compatible versions include: {', '.join(self.compatibility)}`")
+        
+        self._config = _config
 
     def set_config(self, _config: object) -> None:
         self.config = _config
@@ -282,7 +167,7 @@ class Strategy:
             # `recommended method for variable initialization
             # note there is no requirement to create this method
             # the only two methods that require and override are the
-            # next() and on_data() method because they are called by
+            # next() method because they are called by
             # other Odin components.`
             def __initvars__(self):
                 ...
@@ -333,28 +218,8 @@ class Strategy:
 
         self.__initvars__()
 
-    def __iscompatible__(self, __config: object) -> bool:
-        __compatibility: bool = False
-
-        if __config.version is None:
-            LogWarning(
-                f"config `version` is None (implied compatibility with all strategies). runtime errors likely.")
-
-            __compatibility = True
-
-        if self.compatibility == [None]:
-            LogWarning(
-                f"strategy `compatibility` is None (implied compatibility with all configs). runtime errors likely.")
-
-            __compatibility = True
-
-        if __config.version in self.compatibility:
-            __compatibility = True
-
-        return __compatibility
-
     def __feed__(self, *args) -> bool:
         return True
 
-    def next(self) -> StrategyResponse:
+    def next(self, *args) -> StrategyResponse:
         raise RequiredOverwrite(f"`next()` requires overwrite.")
