@@ -1,3 +1,4 @@
+from _utils.errors import RequiredOverwrite
 from _utils.validate import val_instance
 from strategy.base import Strategy
 from strategy.protocol.base import StrategyResponse
