@@ -9,9 +9,12 @@ from _utils.typing import PathLike
 from _utils.validate import LogWarning, val_instance
 from _utils.time import parse_time
 
+# nan reference
 nan = float("nan")
 
+# local timezone
 LOCAL_TIMEZONE = dt.datetime.now(dt.timezone.utc).astimezone().tzinfo
+
 
 # todo: implement strategyevent
 class StrategyEvent:
@@ -264,7 +267,7 @@ class StrategyResponse:
             allow_nan (bool, optional): allow 'NaN' values in the json. Defaults to False.
             indent (bool, optional): indent json file. Defaults to False.
         """
-        
+
         val_instance(__json, PathLike)
         val_instance(allow_nan, bool)
         val_instance(indent, bool)
@@ -288,7 +291,7 @@ def response_from_dict(__dict: dict) -> StrategyResponse:
     Returns:
         StrategyResponse
     """
-    
+
     val_instance(__dict, dict)
 
     if "time" in __dict:
@@ -330,7 +333,7 @@ def response_from_json(__json: PathLike) -> StrategyResponse:
     Returns:
         StrategyResponse
     """
-    
+
     val_instance(__json, PathLike)
 
     with open(__json, "r") as f:
@@ -348,7 +351,7 @@ class Hold(StrategyResponse):
         exchange (str | NoneType, optional): exchange at which the stock is to be bought. Defaults to None.
         uid (int | NoneType, optional): unique id used to pair with 'sell' and 'hold' commands. Defaults to None, will not be paired.
     """
-    
+
     def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
         super().__init__(time, price, "HOLD", ticker, exchange, uid)
 
@@ -364,7 +367,7 @@ class Buy(StrategyResponse):
         exchange (str | NoneType, optional): exchange at which the stock is to be bought. Defaults to None.
         uid (int | NoneType, optional): unique id used to pair with 'sell' and 'hold' commands. Defaults to None, will not be paired.
     """
-    
+
     def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
         super().__init__(time, price, "BUY", ticker, exchange, uid)
 
@@ -380,6 +383,6 @@ class Sell(StrategyResponse):
         exchange (str | NoneType, optional): exchange at which the stock is to be bought. Defaults to None.
         uid (int | NoneType, optional): unique id used to pair with 'sell' and 'hold' commands. Defaults to None, will not be paired.
     """
-    
+
     def __init__(self, time: dt.datetime | dt.time | dt.date | NoneType = None, price: float | int | NoneType = None, ticker: str | NoneType = None, exchange: str | NoneType = None, uid: int | NoneType = None) -> None:
         super().__init__(time, price, "SELL", ticker, exchange, uid)
