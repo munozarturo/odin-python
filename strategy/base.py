@@ -1,8 +1,6 @@
 from _utils.validate import val_instance
 from strategy.protocol import StrategyResponse
 
-# todo: rewrite docs
-
 
 class RequiredOverwrite(Exception):
     """ Base class for classes that require an overwrite. """
@@ -11,9 +9,8 @@ class RequiredOverwrite(Exception):
 
 class Strategy:
     def __init__(self) -> None:
-
-        self.__initvars__()
-
+        pass
+        
     def __feed__(self, *args) -> bool:
         return True
 
