@@ -1,1 +1,1 @@
-from strategy import 
+from strategy import Buy, Sell, Hold
