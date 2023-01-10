@@ -146,8 +146,7 @@ class Strategy:
     def config(self):
         raise ValueError(f"`config` can't be deleted, only overwritten.")
 
-    def __init__(self, config: object, version: Version | None = None,
-                 compatibility: Version | Iterable[Version] | None = None) -> None:
+    def __init__(self, config: object) -> None:
         """
         Stategy base class.
 
@@ -208,12 +207,8 @@ class Strategy:
             compatibility (Version | Iterable[Version] | None, optional): single compatible config Version or iterable of compatible config Versions. Defaults to None. If compatibility is None then there is implied compatibility with all config versions.
         """
 
-        self._version: Version | NoneType = None
-        self._compatible: Version | Iterable[Version] | NoneType = [None]
         self._config: Config = None
 
-        self.version: Version = version
-        self.compatibility: Version | Iterable[Version] = compatibility
         self.config = config
 
         self.__initvars__()
