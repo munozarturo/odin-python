@@ -353,9 +353,6 @@ class Strategy:
 
         return __compatibility
 
-    def on_data(self) -> Trade:
-        raise RequiredOverwrite(f"`on_data()` requires overwrite.")
-
     def __feed__(self, *args) -> bool:
         return True
 
