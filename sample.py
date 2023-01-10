@@ -1,5 +1,5 @@
 from _utils.validate import val_instance
-from strategy import Strategy, StrategyResponse, Buy, Sell, Hold
+from strategy import Strategy, Buy, Sell, Hold
 import datetime as dt
 
 
