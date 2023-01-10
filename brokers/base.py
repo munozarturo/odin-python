@@ -1,4 +1,4 @@
-from _utils.errors import MustOverrideError
+from _utils.errors import RequiredOverwrite
 from _utils.typing import Any, Callable
 from _utils.validate import val_instance
 from _utils.errors import Error
@@ -30,9 +30,9 @@ class Bot:
         self.callback = callback
     
     def run(*args) -> Any:
-        raise MustOverrideError(f"Broker.run() must be overridden.")
+        raise RequiredOverwrite(f"Broker.run() must be overridden.")
 
 
 class Broker:
     def place_order(self, *args) -> Any:
-        raise MustOverrideError(f"Broker.place_order() must be overridden.")
+        raise RequiredOverwrite(f"Broker.place_order() must be overridden.")
