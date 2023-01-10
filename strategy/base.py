@@ -1,4 +1,3 @@
-from _utils.validate import val_instance
 from strategy.protocol import StrategyResponse
 
 
