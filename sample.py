@@ -1,7 +1,9 @@
-from _utils.validate import val_instance
-from strategy import Strategy, Buy, Sell, Hold
 import datetime as dt
 
+from _utils.validate import val_instance
+
+from strategy import Strategy, Buy, Sell, Hold
+from bot import Bot, DataStream
 
 class SampleStrategy(Strategy):
     def __init__(self) -> None:
@@ -100,3 +102,19 @@ class SampleStrategy(Strategy):
         # if the lenght of the ticks is greater than 20, clear the last one
         if len(self._ticks) > 20:
             self._ticks.pop(0)
+            
+            
+class IBDataStream(DataStream):
+    def __init__(self) -> None:
+        super().__init__()
+        
+    def request(self) -> tuple[dt.datetime, float]:
+        
+        pass
+    
+class IBBot(Bot):
+    def __init__(self, strategy: Strategy) -> None:
+        super().__init__(strategy)
+        
+    def run(self) -> None:
+        pass
